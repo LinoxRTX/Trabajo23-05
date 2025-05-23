@@ -1,3 +1,8 @@
+# Trabajo 23-05
+Nombre: Vicente Lizana Farias
+Sección: 1
+Fecha: 23-05-2025
+
 # Sistema de Reservas de Salas
 
 Este repositorio documenta el diseño de un sistema de reservas de salas en entornos académicos. Se presentan tres vistas clave del sistema:
