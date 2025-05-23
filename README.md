@@ -1,7 +1,7 @@
 # Trabajo 23-05
-Nombre: Vicente Lizana Farias
-Sección: 1
-Fecha: 23-05-2025
+- Nombre: Vicente Lizana Farias
+- Sección: 1
+- Fecha: 23-05-2025
 
 # Sistema de Reservas de Salas
 
