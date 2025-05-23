@@ -108,7 +108,4 @@ El sistema permite a los siguientes actores interactuar con el sistema:
 - **Base de datos**: simulada o real (según entorno)
 - **Organización**: MVC + Módulos externos desacoplados
 
----
-
-## 📁 Estructura del Repositorio (Sugerida)
 
