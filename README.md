@@ -1,4 +1,7 @@
-# 🎓 Sistema de Reservas de Salas - Documentación Detallada
+# 🎓 Sistema de Reservas de Salas - Trabajo 23-05
+- Nombre: Vicente Lizana Farias
+- Sección: 1
+- Fecha: 23-05-2025
 
 Este documento proporciona una descripción exhaustiva del diseño y la implementación de un sistema de reservas de salas en entornos académicos. Se abordan los diagramas de casos de uso, clases y componentes, identificando errores comunes y presentando las correcciones aplicadas, fundamentadas en buenas prácticas de modelado UML.
 
