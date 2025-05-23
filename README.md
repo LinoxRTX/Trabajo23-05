@@ -147,8 +147,3 @@ El sistema se divide en los siguientes componentes:
 4. **Aprobación de Reserva**: El administrador revisa y aprueba o rechaza la solicitud.
 5. **Notificación**: El sistema notifica al estudiante sobre el estado de su reserva mediante correo electrónico o SMS.
 6. **Gestión de Historial**: El estudiante puede consultar y eliminar su historial de reservas.
-
----
-
-## Estructura del Repositorio
-
