@@ -90,14 +90,10 @@ Organización modular del sistema:
 
 ## 💡 Tecnologías sugeridas para implementación
 
-> *(Esta sección puede adaptarse al entorno tecnológico del desarrollador)*
-
 - Lenguaje: Java, C#, Python
 - Frameworks sugeridos: Spring Boot, ASP.NET Core, Flask
 - Persistencia: SQLite o archivo JSON simulado
 - Arquitectura: MVC + Singleton + Adapter + Bridge
 
 ---
-
-## 📂 Estructura del Repositorio
 
