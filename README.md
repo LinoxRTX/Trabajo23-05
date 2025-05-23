@@ -1,116 +1,119 @@
-# Trabajo 23-05
-- Nombre: Vicente Lizana Farias
-- Sección: 1
-- Fecha: 23-05-2025
+# 🎓 Sistema de Reservas de Salas - Proyecto Académico
 
-# Sistema de Reservas de Salas
-
-Este repositorio documenta el diseño de un sistema de reservas de salas en entornos académicos. Se presentan tres vistas clave del sistema:
-
-1. Casos de uso del sistema.
-2. Diagrama de clases.
-3. Diagrama de componentes.
-
-Incluye el uso de patrones de diseño como **Singleton**, **Bridge**, y **Adapter**, y una estructura orientada a objetos con separación clara de responsabilidades.
+Este repositorio documenta el diseño de un **Sistema de Reservas de Salas** utilizado en entornos académicos. El sistema permite que estudiantes y administradores gestionen reservas de salas de estudio o reuniones, validando disponibilidad en tiempo real con sistemas externos y notificando los cambios por correo o SMS.
 
 ---
 
-## 🧩 Diagramas del Sistema
+## 📘 Índice
 
-### 1. Casos de Uso
+- [🎯 Objetivo del Proyecto](#-objetivo-del-proyecto)
+- [📐 Modelado del Sistema](#-modelado-del-sistema)
+  - [Casos de Uso](#casos-de-uso)
+  - [Diagrama de Clases](#diagrama-de-clases)
+  - [Diagrama de Componentes](#diagrama-de-componentes)
+- [🧱 Arquitectura y Diseño](#-arquitectura-y-diseño)
+  - [Patrones de Diseño Aplicados](#patrones-de-diseño-aplicados)
+  - [Errores Detectados y Correcciones](#errores-detectados-y-correcciones)
+- [🔄 Flujo de Usuario](#-flujo-de-usuario)
+- [🗂 Estructura del Repositorio](#-estructura-del-repositorio)
+- [🚀 Instrucciones de Despliegue (Simulado)](#-instrucciones-de-despliegue-simulado)
+- [📚 Glosario](#-glosario)
+- [📬 Contacto](#-contacto)
 
-El sistema permite a los siguientes actores interactuar con el sistema:
+---
+
+## 🎯 Objetivo del Proyecto
+
+Desarrollar un sistema modular y extensible para la gestión de reservas de salas, que permita:
+
+- Realizar reservas desde un navegador web.
+- Validar disponibilidad con fuentes externas.
+- Notificar al usuario sobre cambios de estado.
+- Ser fácilmente mantenible y ampliable gracias a la aplicación de principios SOLID y patrones de diseño.
+
+---
+
+## 📐 Modelado del Sistema
+
+### Casos de Uso
+
+Los actores principales interactúan con los siguientes casos:
 
 - **Estudiante**:
   - Reservar sala.
   - Cancelar reserva.
-  - Ver estado de solicitudes.
-  - Ver historial personal y de otros usuarios.
+  - Ver historial propio y de otros estudiantes.
+  - Consultar disponibilidad de salas.
   - Eliminar historial de reservas.
-  - Consultar disponibilidad externa.
+  - Ver estado de solicitudes.
 - **Administrador**:
-  - Aprobar o rechazar reservas.
+  - Aprobar o rechazar solicitudes de reserva.
   - Generar reportes.
-  - Notificar cambios por correo.
-- **Sistema Externo**:
-  - Consulta de disponibilidad a través de un API.
-- **Sistema de Notificaciones**:
-  - Enviar notificaciones por correo o SMS según el evento.
+  - Disparar notificaciones al usuario.
+- **Sistemas externos**:
+  - Sistema Académico: API externa para verificar disponibilidad.
+  - Sistema de Notificaciones: Envío de correo y SMS.
+
+### Diagrama de Clases
+
+Clases principales:
+
+- `Usuario`: contiene datos comunes (nombre, correo).
+- `Administrador`: hereda de `Usuario`, con métodos para aprobar o rechazar reservas.
+- `SistemaReservas`: coordina reservas y cancelaciones.
+- `Sala`: atributos como número y disponibilidad.
+- `Reserva`: contiene fecha y estado.
+- `GestorNotificaciones`: interfaz con métodos para enviar mensajes.
+- `NotificadorCorreo` y `NotificadorSMS`: implementaciones del patrón Bridge.
+
+### Diagrama de Componentes
+
+- **Navegador del Estudiante**:
+  - Formulario de reserva.
+  - Módulo de historial.
+- **Sistema de Gestión de Reservas**:
+  - Controlador de reservas.
+  - Lógica de negocio.
+- **Gestor de Notificaciones**:
+  - Correo y SMS a través de puente.
+- **Módulo de API Externa**:
+  - Adaptador para disponibilidad de salas.
+- **Base de Datos Central**:
+  - Registros de usuarios y reservas.
 
 ---
 
-### 2. Diagrama de Clases
+## 🧱 Arquitectura y Diseño
 
-#### Clases Principales:
+### Patrones de Diseño Aplicados
 
-- `Usuario` (nombre, correo): puede `reservarSala()` y `cancelarReserva()`.
-- `Administrador` (hereda de `Usuario`): puede `aprobarReserva()` y `rechazarReserva()`.
-- `SistemaReservas`: lógica para `reservar()` y `cancelar()`.
-- `Sala`: contiene `numero`, `disponible`; tiene métodos `marcarDisponible()` y `marcarOcupado()`.
-- `Reserva`: con atributos `fecha` y `estado`.
-- `GestorNotificaciones`: tiene `enviarCorreo()` y `enviarSMS()` usando notificadores implementados con el patrón **Bridge**:
-  - `NotificadorCorreo`
-  - `NotificadorSMS`
+| Patrón     | Ubicación                             | Propósito |
+|------------|----------------------------------------|-----------|
+| **Bridge** | `GestorNotificaciones` ↔ Notificadores | Separar abstracción y su implementación (correo/SMS). |
+| **Adapter**| API de Disponibilidad de Salas         | Integrar servicios externos sin modificar la lógica del sistema. |
+| **Singleton** | `GestorNotificaciones`               | Garantizar una única instancia para control global. |
 
----
-
-### 3. Diagrama de Componentes
-
-#### Componentes del Servidor Web:
-
-- `Controlador de Reservas`
-- `Sistema de Gestión de Reservas`
-- `Gestor de Notificaciones`
-- `Navegador del Estudiante`:
-  - Formulario de Reserva
-  - Módulo de Historial
-
-#### Servicios Externos:
-
-- `Módulo de Notificación Externa`:
-  - `Notificador SMS`
-  - `Notificador Correo`
-- `Sistema Académico Externo`:
-  - `API de Disponibilidad de Salas` (acceso mediante patrón **Adapter**)
-
-#### Base de Datos:
-
-- `Base de Datos Central`: usuarios y reservas.
-
----
-
-## ❌ Errores Detectados en los Diagramas
+### Errores Detectados y Correcciones
 
 | Diagrama | Error | Corrección Aplicada | Justificación Técnica |
 |---------|-------|----------------------|------------------------|
-| Casos de Uso | “Estudiante” y “Administrador” duplican funcionalidades de “Usuario” | Se estableció que ambos heredan de `Usuario` en el diagrama de clases | Promueve reutilización de código y diseño orientado a objetos |
-| Casos de Uso | "Notificar cambio por correo" está aislado | Se integró como resultado de `AprobarReserva` y `CancelarReserva` | Es una acción secundaria, dependiente del resultado principal |
-| Clases | `GestorNotificaciones` accede directamente a clases concretas | Se aplicó patrón **Bridge** entre gestor y notificadores | Desacopla la lógica de envío de notificaciones del gestor principal |
-| Clases | No se especificaba que `GestorNotificaciones` es Singleton | Se implementó como clase Singleton | Evita múltiples instancias no necesarias, mejora consistencia de estado |
-| Componentes | No se define cómo se conecta el sistema externo | Se aplica patrón **Adapter** para acceder al API de disponibilidad | Permite la conexión con servicios externos sin alterar la lógica interna |
-| Componentes | Estructura del “Servidor Web” es ambigua | Se organiza en vista-controlador-servicio (MVC) | Aclara responsabilidades de cada módulo y favorece mantenibilidad |
+| Casos de Uso | Actores con acciones duplicadas | Uso de herencia en clases (`Usuario`, `Administrador`) | Favorece la reutilización y claridad |
+| Clases | Acoplamiento fuerte a notificadores concretos | Uso del patrón Bridge | Permite agregar nuevos canales sin modificar código existente |
+| Clases | Ausencia de control de instancias | `GestorNotificaciones` como Singleton | Evita inconsistencias en notificaciones múltiples |
+| Componentes | Falta de integración con API externa | Inclusión de un Adapter para `Sistema Académico Externo` | Encapsula la lógica de integración externa |
 
 ---
 
-## ✅ Correcciones Implementadas
+## 🔄 Flujo de Usuario
 
-1. Se definió correctamente la **herencia entre Usuario y Administrador**.
-2. El `GestorNotificaciones` ahora usa **Bridge** para conectarse a distintos canales.
-3. Se declaró `GestorNotificaciones` como **Singleton**.
-4. La consulta a disponibilidad externa se hace mediante un **Adapter**, tal como se muestra.
-5. El **modelo MVC** se respeta en el diseño de componentes: formularios → controlador → lógica → notificaciones/BD.
-6. Se organizó mejor el diagrama de clases para reflejar relaciones claras y responsabilidades bien separadas.
+1. **Inicio**: el estudiante accede al navegador y abre el formulario de reserva.
+2. **Consulta**: se consulta la disponibilidad en el sistema académico externo.
+3. **Reserva**: si hay disponibilidad, se guarda en la BD.
+4. **Validación**: un administrador aprueba o rechaza la solicitud.
+5. **Notificación**: se informa al estudiante por correo o SMS.
+6. **Historial**: el estudiante puede consultar y eliminar su historial.
 
 ---
 
-## 💡 Arquitectura del Proyecto
-
-- **Lenguaje sugerido**: Java / C# / Python
-- **Patrones usados**:
-  - Bridge: separación de gestor y canales de notificación
-  - Adapter: para conectar con APIs externas
-  - Singleton: para instancias globales de gestores
-- **Base de datos**: simulada o real (según entorno)
-- **Organización**: MVC + Módulos externos desacoplados
-
+## 🗂 Estructura del Repositorio
 
